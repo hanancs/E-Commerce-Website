@@ -7,7 +7,7 @@
 body,html 
 {
 	padding-top:65px;
-	background: url("bgimg.jpg") no-repeat center center fixed;
+	background: url("images/bgimg.jpg") no-repeat center center fixed;
 	background-position: top;
 	-webkit-background-size: cover;
 	-moz-background-size: cover;
