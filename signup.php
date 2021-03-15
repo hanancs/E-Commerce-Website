@@ -10,7 +10,7 @@ echo "<h4>".$pagename."</h4>"; //display name of the page on the web page
 session_start();
 echo "<div class=formStyle loginStyle> ";
 echo "<form id=signupform action=signup_process.php method=post>";
-echo "<table>";
+echo "<table class='signupform'>";
 echo "<tr>";
 echo "<td>First Name:</td>";
 echo "<td><input type='text' name='fname' size='' legnth=''></td>";
