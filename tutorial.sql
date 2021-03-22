@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Mar 14, 2021 at 07:00 PM
+-- Generation Time: Mar 22, 2021 at 06:19 AM
 -- Server version: 5.7.31
 -- PHP Version: 7.3.21
 
@@ -20,6 +20,59 @@ SET time_zone = "+00:00";
 --
 -- Database: `tutorial`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `orders`
+--
+
+DROP TABLE IF EXISTS `orders`;
+CREATE TABLE IF NOT EXISTS `orders` (
+  `orderNo` int(4) NOT NULL AUTO_INCREMENT,
+  `userId` int(4) NOT NULL,
+  `orderDateTime` datetime NOT NULL,
+  `orderTotal` decimal(8,2) NOT NULL DEFAULT '0.00',
+  `orderStatus` varchar(50) NOT NULL,
+  PRIMARY KEY (`orderNo`),
+  KEY `userId` (`userId`)
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `orders`
+--
+
+INSERT INTO `orders` (`orderNo`, `userId`, `orderDateTime`, `orderTotal`, `orderStatus`) VALUES
+(15, 6, '2021-03-22 06:09:25', '4413.74', 'placed'),
+(16, 11, '2021-03-22 06:11:43', '2940.74', 'placed');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `order_line`
+--
+
+DROP TABLE IF EXISTS `order_line`;
+CREATE TABLE IF NOT EXISTS `order_line` (
+  `orderLineId` int(4) NOT NULL AUTO_INCREMENT,
+  `orderNo` int(4) NOT NULL,
+  `prodId` int(4) NOT NULL,
+  `quantityOrdered` int(4) NOT NULL,
+  `subTotal` decimal(8,2) NOT NULL DEFAULT '0.00',
+  PRIMARY KEY (`orderLineId`),
+  KEY `INDEX` (`orderNo`),
+  KEY `prodId` (`prodId`)
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `order_line`
+--
+
+INSERT INTO `order_line` (`orderLineId`, `orderNo`, `prodId`, `quantityOrdered`, `subTotal`) VALUES
+(11, 15, 1, 3, '1141.74'),
+(12, 15, 3, 8, '3272.00'),
+(13, 16, 1, 3, '1141.74'),
+(14, 16, 2, 1, '1799.00');
 
 -- --------------------------------------------------------
 
@@ -78,6 +131,23 @@ CREATE TABLE IF NOT EXISTS `users` (
 INSERT INTO `users` (`userId`, `userType`, `userFName`, `userLName`, `userAddress`, `userPostCode`, `userTelNo`, `userEmail`, `userPassword`) VALUES
 (6, NULL, 'Ben', ' Hanan', 'Sinnakadai', '41000', '1234', 'benhanan.subdendran@gmail.com', '123'),
 (11, NULL, 'mk', ' mm', 'Sinnakadai', '41000', '4334', 'test@test.com', '123');
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `orders`
+--
+ALTER TABLE `orders`
+  ADD CONSTRAINT `orders_ibfk_1` FOREIGN KEY (`userId`) REFERENCES `users` (`userId`);
+
+--
+-- Constraints for table `order_line`
+--
+ALTER TABLE `order_line`
+  ADD CONSTRAINT `order_line_ibfk_1` FOREIGN KEY (`orderNo`) REFERENCES `orders` (`orderNo`),
+  ADD CONSTRAINT `order_line_ibfk_2` FOREIGN KEY (`prodId`) REFERENCES `product` (`prodId`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
